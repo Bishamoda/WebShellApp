@@ -1,0 +1,40 @@
+﻿@model List<WebShellApp.Models.CommandHistory>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Добро Пожаловать</h1>
+    <p>
+        <input name="cmd" id="cmd"/>
+        <button id="executebtn">Выполнить</button>
+        <h2>Текущий результат</h2>
+        <pre id="result">
+
+        </pre>
+    </p>
+</div>
+
+<div>
+    <h2>История Команд</h2>
+    @{ await Html.RenderPartialAsync("ShowHistory", Model); }
+</div>
+
+@section Scripts{
+    <script>
+        var execute = async() => {
+                const cmd = document.querySelector("#cmd").value;
+                const url = "/home/Add?command=" + cmd;
+
+                const response = await fetch(url, {method:"POST"});
+                const result = await response.text();
+                document.querySelector("#result").innerText = result;
+
+                const responseh = await fetch("/home/showhistory", { method:"GET" });
+                const resulth = await responseh.text();
+                document.querySelector("#result").innerHTML = resulth;
+        }
+        document.querySelector("#executebtn").onclick = execute;
+    </script>
+}

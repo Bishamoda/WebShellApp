@@ -1,0 +1,23 @@
+﻿@model List<WebShellApp.Models.CommandHistory>
+
+<div>
+    <table>
+        @foreach (CommandHistory ch in Model)
+        {
+            <tr>
+                <td>
+                    @ch.Command
+                </td>
+                <td>
+                    <pre>
+                    @ch.Output
+                    </pre>
+                    <h2>-----------------------------------------------</h2>
+                </td>
+                <td>
+                    @ch.CreatedDate.ToString("MM-dd-yyyy-HH-mm-ss")
+                </td>
+            </tr>
+        }
+    </table>
+</div>
